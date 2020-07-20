@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+      }
+      .container {
+        display: flex;
+        border: 1px solid red;
+      }
+      .name {
+        margin: 10px;
+        font-size: 24px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <template id="userCardTemplate">
+      <h1>Web Component</h1>
+      <div class="container">
+        <img
+          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594988168151&di=7e9bb1cf019e4e58b71fd98c7e929215&imgtype=0&src=http%3A%2F%2Fztd00.photos.bdimg.com%2Fztd%2Fw%3D700%3Bq%3D50%2Fsign%3Df7daf6ef9952982205333bc3e7f10af6%2F314e251f95cad1c8167f360f763e6709c83d51d6.jpg"
+          class="img"
+        />
+        <p class="name">User Name</p>
+      </div>
+    </template>
+  </body>
+  <script>
+    class UserCard extends HTMLElement {
+      constructor() {
+        super();
+        let template = document.getElementById("userCardTemplate");
+        let content = template.content.cloneNode(true);
+        this.content = content; // DocumentFragment被添加到dom中后，就被清空了
+
+        // let shadow = this.attachShadow({ mode: "closed" }); //不允许外部访问
+        // shadow.innerHTML = `<div id="shadowContainer">show</div>`;
+
+        let shadow = this.attachShadow({ mode: "open" }); //shadowDom可以隔离环境，style无法共享
+        this.shadowRoot.innerHTML = `<div id="shadowContainer">show</div>`;
+
+        this.container = this.shadowRoot;
+        this.setAttribute("show", "true");
+      }
+      static get observedAttributes() {
+        return ["show"];
+      }
+      attributeChangedCallback(attr, oldVal, newVal) {
+        switch (attr) {
+          case "show":
+            if (
+              newVal === "false" &&
+              this.container.querySelector(".container")
+            ) {
+              this.container.removeChild(
+                this.container.querySelector(".container")
+              );
+            } else {
+              let template = document.getElementById("userCardTemplate");
+              let content = template.content.cloneNode(true);
+              this.container.appendChild(content);
+            }
+        }
+      }
+    }
+    customElements.define("user-card", UserCard);
+    let myEle = customElements.get("user-card");
+    let card = new myEle();
+    document.body.appendChild(card);
+    setTimeout(() => {
+      card.setAttribute("show", "false");
+    }, 1000);
+    setTimeout(() => {
+      card.setAttribute("show", "true");
+    }, 3000);
+  </script>
+</html>

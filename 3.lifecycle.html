@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+      }
+      .container {
+        display: flex;
+        border: 1px solid red;
+      }
+      .name {
+        margin: 10px;
+        font-size: 24px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <template id="userCardTemplate">
+      <h1>Web Component</h1>
+      <div class="container">
+        <img
+          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594988168151&di=7e9bb1cf019e4e58b71fd98c7e929215&imgtype=0&src=http%3A%2F%2Fztd00.photos.bdimg.com%2Fztd%2Fw%3D700%3Bq%3D50%2Fsign%3Df7daf6ef9952982205333bc3e7f10af6%2F314e251f95cad1c8167f360f763e6709c83d51d6.jpg"
+          class="img"
+        />
+        <p class="name">User Name</p>
+      </div>
+    </template>
+  </body>
+  <script>
+    // 生命周期的方法
+    class UserCard extends HTMLElement {
+      constructor() {
+        super();
+        let template = document.getElementById("userCardTemplate");
+        let content = template.content.cloneNode(true);
+        this.appendChild(content);
+      }
+      doThing() {
+        console.log("做些什么...");
+      }
+      static get observedAttributes() {
+        //监听的属性
+        return ["email"];
+      }
+      attributeChangedCallback(attr, oldVal, newVal) {
+        //属性改变的回调
+        switch (attr) {
+          case "email":
+            console.log("email change:", attr, oldVal, newVal);
+        }
+      }
+      connectedCallback() {
+        console.log("插入时执行");
+      }
+      disconnectCallback() {
+        console.log("移除时执行");
+      }
+    }
+    customElements.define("user-card", UserCard);
+    let myEle = customElements.get("user-card");
+    let card = new myEle();
+    card.setAttribute("email", "yxd");
+
+    setTimeout(() => {
+      card.setAttribute("email", "yxd1111");
+      document.body.appendChild(card);
+    }, 100);
+    setTimeout(() => {
+      card.doThing();
+      document.body.removeChild(card);
+    }, 6000);
+  </script>
+</html>

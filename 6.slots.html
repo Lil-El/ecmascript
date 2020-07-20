@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <user-card>
+      <p slot="name">YXD</p>
+    </user-card> -->
+    <template id="userCardTemplate">
+      <div class="container">
+        <slot name="name" class="name">User Name</slot>
+      </div>
+    </template>
+  </body>
+  <script>
+    class UserCard extends HTMLElement {
+      constructor() {
+        super();
+        let template = document.getElementById("userCardTemplate");
+        let content = template.content.cloneNode(true);
+        this.attachShadow({ mode: "closed" }).appendChild(content);
+      }
+    }
+    customElements.define("user-card", UserCard);
+    let el = customElements.get("user-card");
+    let e = new el();
+    let p = document.createElement("p");
+    p.setAttribute("slot", "name");
+    p.innerText = "yy";
+    e.appendChild(p);
+    document.body.appendChild(e);
+  </script>
+</html>
