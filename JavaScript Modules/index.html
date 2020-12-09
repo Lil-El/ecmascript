@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="module" src="./module.js"></script>
+    <script src="./normal.js"></script>
+    <script type="module">
+      import { expAdd } from "./module.js";
+      console.log(expAdd(3, 3));
+      console.log(normal);
+    </script>
+    <script type="module">
+      import { add } from "./a.js";
+      console.log(add(3, 3));
+      import("./a.js").then(({ add, default: clg }) => {
+        // console.log(modules);
+        add(1, 1);
+        clg();
+      });
+    </script>
+  </body>
+</html>

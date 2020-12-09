@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+      }
+      .container {
+        display: flex;
+        border: 1px solid red;
+      }
+      .name {
+        margin: 10px;
+        font-size: 24px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <user-card name="yxd"></user-card>
+    <hr />
+    <user-card name="ywd">
+      <span slot="slot1">yxd99324@qq.com</span>
+    </user-card>
+    <hr />
+    <user-card name="yyh"></user-card>
+    <hr />
+    <div is="user-card2"></div>
+
+    <template id="userCardTemplate">
+      <h1>Web Component</h1>
+      <div class="container">
+        <img
+          src="https://semantic-ui.com/images/avatar2/large/kristy.png"
+          class="img"
+        />
+        <p class="name">User Name</p>
+        <slot name="slot1">Email</slot>
+      </div>
+    </template>
+  </body>
+  <script>
+    class UserCard2 extends HTMLDivElement {
+      constructor() {
+        super();
+        let template = document.getElementById("userCardTemplate");
+        let content = template.content.cloneNode(true);
+        this.appendChild(content);
+      }
+    }
+    window.customElements.define("user-card2", UserCard2, { extends: "div" });
+    class UserCard extends HTMLElement {
+      constructor() {
+        super();
+        let template = document.getElementById("userCardTemplate");
+        let content = template.content.cloneNode(true);
+        this.appendChild(content);
+      }
+    }
+    window.customElements.define("user-card", UserCard);
+  </script>
+</html>
