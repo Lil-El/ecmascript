@@ -11,18 +11,30 @@
         height: 8px;
         border-radius: 50%;
         background-color: aqua;
+        z-index: 1;
+      }
+      .line {
+        position: absolute;
+        height: 1px;
+        background-color: gray;
       }
     </style>
   </head>
   <body>
+    <canvas id="canvas" width="1200" height="900"></canvas>
+
     <script type="module">
       import { Dot } from "./Dot.js";
 
-      const dot1 = new Dot();
-      const dot2 = new Dot(10, 10);
+      Dot.setContext(document.querySelector("#canvas").getContext("2d"));
+      Dot.Critical = 80;
 
-      Dot.createDom(document.body, dot1);
-      Dot.createDom(document.body, dot2);
+      const dots = [];
+      for (let i = 0; i < 100; i++) {
+        dots[i] = new Dot(Math.random() * 1200, Math.random() * 900);
+      }
+
+      Dot.render(...dots);
     </script>
   </body>
 </html>

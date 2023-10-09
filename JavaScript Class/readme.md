@@ -15,10 +15,8 @@ class 属性的 setter、getter 行为前的拦截
 
 ```js
 class Dot{
-  set x(){}
+  set x(x){}
   get x(){}
-
-  static set x(){}
 }
 ```
 
