@@ -15,6 +15,8 @@ export class Dot {
   /** @type {Set<Dot>} 私有 Set of `Dot`  */
   #near = new Set();
 
+  // TODO: dot关联的dot、dot关联的线
+
   /** @type {string} 临界值 Critical */
   static Critical = 50;
 
@@ -57,6 +59,10 @@ export class Dot {
     return this;
   }
 
+  render(dot) {
+    Dot.#drawPoint(dot);
+  }
+
   // 静态方法只能使用静态的成员变量，没有this
   static render(...dots) {
     dots.forEach(Dot.#drawPoint);
@@ -81,7 +87,7 @@ export class Dot {
 
   static #drawPoint(dot) {
     const ctx = Dot.#context;
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "#ffffff";
     ctx.beginPath();
     ctx.arc(dot.x, dot.y, 4, 0, 2 * Math.PI, true);
     ctx.fill();
@@ -90,7 +96,7 @@ export class Dot {
 
   static #drawLine(dot1, dot2) {
     const ctx = Dot.#context;
-    ctx.strokeStyle = "gray";
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(dot1.x, dot1.y);
