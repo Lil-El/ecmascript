@@ -4,15 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      .dot {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: aqua;
+      }
+    </style>
   </head>
   <body>
-    <!-- TODO: 点周围的点算法实现 -->
     <script type="module">
       import { Dot } from "./Dot.js";
 
-      const dot = new Dot();
+      const dot1 = new Dot();
+      const dot2 = new Dot(10, 10);
 
-      console.log(dot.x);
+      Dot.createDom(document.body, dot1);
+      Dot.createDom(document.body, dot2);
     </script>
   </body>
 </html>
