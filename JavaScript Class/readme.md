@@ -38,6 +38,8 @@ class Dot {
 
 静态：Dot.var; Dot.log();
 
+静态的只能调用静态的变量、函数
+
 ```js
 class Dot {
   static var;
