@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
       body {
         background: radial-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
       }
@@ -16,7 +20,8 @@
     <script type="module">
       import { Dot } from "./Dot.js";
 
-      Dot.setContext(document.querySelector("#canvas").getContext("2d"));
+      const canvas = document.querySelector("#canvas");
+      Dot.setContext(canvas.getContext("2d"));
       Dot.Critical = 80;
 
       const dots = [];
@@ -25,6 +30,19 @@
       }
 
       Dot.render(...dots);
+
+      canvas.addEventListener("mousemove", (evt) => {
+        const { clientX: x, clientY: y } = evt;
+        for (let i = 0; i < dots.length; i++) {
+          const d = dots[i];
+          if (Dot.distance(d, { x, y }) <= Dot.radius) {
+            canvas.style = "cursor: pointer;";
+            break;
+          } else {
+            canvas.style = "cursor: default;";
+          }
+        }
+      });
     </script>
   </body>
 </html>

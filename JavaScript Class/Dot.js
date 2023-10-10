@@ -12,10 +12,15 @@ export class Dot {
   /** @type {number} coordinate of y */
   y;
 
+  speedX = 0;
+  speedY = 0;
+
   /** @type {Set<Dot>} 私有 Set of `Dot`  */
   #near = new Set();
 
   // TODO: dot关联的dot、dot关联的线
+
+  static radius = 4;
 
   /** @type {string} 临界值 Critical */
   static Critical = 50;
@@ -27,6 +32,8 @@ export class Dot {
   constructor(x = 0, y = 0) {
     this.x = x;
     this.y = y;
+    this.speedX = Math.random() * 20;
+    this.speedY = Math.random() * 20;
   }
 
   static setContext(context) {
@@ -89,7 +96,7 @@ export class Dot {
     const ctx = Dot.#context;
     ctx.fillStyle = "#ffffff";
     ctx.beginPath();
-    ctx.arc(dot.x, dot.y, 4, 0, 2 * Math.PI, true);
+    ctx.arc(dot.x, dot.y, Dot.radius, 0, 2 * Math.PI, true);
     ctx.fill();
     ctx.closePath();
   }
