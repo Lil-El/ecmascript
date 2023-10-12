@@ -18,8 +18,6 @@ export class Dot {
   /** @type {Set<Dot>} 私有 Set of `Dot`  */
   #near = new Set();
 
-  // TODO: dot关联的dot、dot关联的线
-
   static radius = 4;
 
   /** @type {string} 临界值 Critical */
